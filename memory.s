@@ -28,7 +28,8 @@ map_memory:
     mov r1, #4096 @ page_size
     mov r2, #3    @ read and write
     mov r3, #1    @ map_shared
-    ldr r5, fpga_bridge @ offset
+    ldr r5, =fpga_bridge @ offset
+    ldr r5, [r5]
     mov r7, #192  @ system call: mmap2
     svc 0
     
