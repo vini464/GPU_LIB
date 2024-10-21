@@ -18,46 +18,33 @@
 .equ data_a, 0x80
 .equ wrreg,  0xc0
 
+
 @ argumentos:
-@ r0 -> bgr (blue, green, red) code 
-@ r1 -> linha  (deve estar entre 0 e 59)
-@ r2 -> coluna (deve estar entre 0 e 79)
-@ Endereço de memoria (mapeado) da fpga_bridge pela pilha
+@ r0 -> Endereço de memoria (mapeado) da fpga_bridge
+@ r1 -> bgr (blue, green, red) code 
+@ r2 -> edereço do bloco  14 bits
+@
 wbm:
-  sub sp, sp, #24
-  str r5, [sp, #20]
-  str r0, [sp, #16]
-  str r1, [sp, #12]
-  str r2, [sp, #8]
-  str r3, [sp, #4]
-  str r4, [sp, #0]
- 
+  sub sp, sp, #12
+  str r0, [sp, #8]
+  str r1, [sp, #4]
+  str r2, [sp, #0]
+  
+  lsl r2, r2, #4
+  add r2, r2, #0b0010
 
-  ldr r3, [sp, #24] @ fpga_bridge
+  str r1, [r0, #data_b] @ inserindo bgr no dataB
+  str r2, [r0, #data_a] @ inserindo memoria e upcode no dataA
 
-  @ find block memory
-  mov r5, #80
-  mul r4, r1, r5  
-  add r4, r4, r2
-
-  @ add upcode
-  lsl r4, r4, #4
-  add r4, r4, #0b0010
-
-  str r0, [r3, #data_b] @ inserindo bgr no dataB
-  str r4, [r3, #data_a] @ inserindo memoria e upcode no dataA
   mov r1, #1
-  str r1, [r3, #wrreg] @ ativando wrreg
+  str r1, [r0, #wrreg] @ ativando wrreg
   mov r1, #0
-  str r1, [r3, #wrreg] @ desativando wrreg
+  str r1, [r0, #wrreg] @ desativando wrreg
 
-  ldr r5, [sp, #20]
-  ldr r0, [sp, #16]
-  ldr r1, [sp, #12]
-  ldr r2, [sp, #8]
-  ldr r3, [sp, #4]
-  ldr r4, [sp, #0]
-  add sp, sp, #28 @ retirando fpga_bridge da pilha
+  ldr r0, [sp, #8]
+  ldr r1, [sp, #4]
+  ldr r2, [sp, #0]
+  add sp, sp, #12 
 
   bx lr
 
@@ -151,6 +138,8 @@ wsm:
   bx lr
 
 @ ------------------------------------------------------ @
+  
+  
 
 @ Argumentos:
 @ r0 -> Forma
