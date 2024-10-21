@@ -10,3 +10,6 @@ link:
 run: build link 
 	sudo ./run
 	
+
+test:
+	gcc -o run test.c bg1.c gpu_functions.s memory.s vga.s

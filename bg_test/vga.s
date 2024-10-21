@@ -1,6 +1,9 @@
 .global setSpr
 .type setSpr, %function
-
+.extern wsm
+.extern wbm
+.extern wbr_sp
+.extern wbr_bg
 
  
 @ Receives the mapped fpga_bridge in R0, and the bitmap vector address in R1
@@ -116,10 +119,10 @@ getNewblock:
     @ r0 ok
     @ r1 ok
     @ r2 ok
-    bl wmb
+    bl wbm
     
     add r2, #1
-    b getNewBlock 
+    b getNewblock 
     
 endSetBgImg: 
     ldr r0, [sp, #0]
