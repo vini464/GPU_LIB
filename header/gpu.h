@@ -6,9 +6,9 @@
 #define BLUE   0b111000000
 #define YELLOW 0b000111111
 #define PURPLE 0b111000111
-#define CIAN   0b111111000
+#define CYAN   0b111111000
 #define WHITE  0b111111111
-#define black  0b000000000
+#define BLACK  0b000000000
 
 
 typedef unsigned short u_short ;
