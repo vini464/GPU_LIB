@@ -193,7 +193,7 @@ wbr_bg:
 @ Mostra um sprite na tela
 @ Argumentos:
 @ r0, sp (habilita o sprite) 1 bit
-@ r1, pos_x_y 30 bits (só da pra passar até o r3 como parâmetro)
+@ r1, pos_x_y 20 bits (só da pra passar até o r3 como parâmetro)
 @ r2, offset (escolha do sprite na memoria) 9 bits
 @ r3, registrador (layer de exibição) 5 bits quanto mais próximo de 0 mais alto
 wbr_sp:

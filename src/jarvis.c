@@ -1,6 +1,6 @@
 #include "../header/gpu.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void wbr_bg_handler();
 void wbr_sp_handler();
@@ -37,7 +37,7 @@ int main(void) {
 void wbr_bg_handler() {
   int color = 0;
   do {
-    printf("choose a color:");
+    printf("choose a color:\n");
     printf("[1] YELLOW;\n");
     printf("[2] GREEN;\n");
     printf("[3] RED;\n");
@@ -48,7 +48,7 @@ void wbr_bg_handler() {
     printf("[8] BLACK;\n> ");
     scanf("%d", &color);
     if (color <= 0 || color > 8) {
-      printf("Unsuported color");
+      printf("Unsuported color\n");
     }
   } while (color <= 0 || color > 8);
   switch (color) {
@@ -83,19 +83,27 @@ void wbr_sp_handler() {
   int choice = 0;
   int unsigned short posx, posy;
   int unsigned short sprID, reg;
+  unsigned int pos;
   do {
     printf("What you want to do?\n");
     printf("[1] show a single sprite.\n");
-    printf("[2] show a single sprite.\n> ");
+    printf("[2] show all sprites.\n> ");
     scanf("%d", &choice);
     if (choice <= 0 || choice > 2)
       printf("Unsuported option\n");
   } while (choice <= 0 || choice > 2);
   if (choice == 2) {
-    for (unsigned short cont = 0; cont < 620; cont += 20) {
-      posx = cont / 20;
-      posy = cont % 20;
-      wbr_sp(1, posx, posy, posx, posx); // confia que funciona
+    unsigned short l, c;
+    sprID = 0;
+    reg = 1;
+    for (l = 0; l < 6; l++) {
+      for (c = 0; c < 5; c++) {
+        posx = c * 20;
+        posy = l * 20;
+        pos = posx << 10;
+        pos += posy;
+        wbr_sp(1, pos, sprID, reg);
+      }
     }
   } else {
     do {
@@ -107,11 +115,13 @@ void wbr_sp_handler() {
     do {
       printf("Insert the sprite id and the register\n> ");
       scanf("%hu %hu", &sprID, &reg);
-      if (posx < 0 || posy < 0 || posx > 31 || posy > 31)
-        printf("Position out of range!\n");
-    } while (posx < 0 || posy < 0 || posx > 31 || posy > 31);
+      if (sprID <= 0 || reg < 0 || sprID > 31 || reg > 31)
+        printf("you typed something wrong!\n");
+    } while (sprID <= 0 || reg < 0 || sprID > 31 || reg > 31);
 
-    wbr_sp(1, posx, posy, sprID, reg);
+    pos = posx << 10;
+    pos += posy;
+    wbr_sp(1, pos, sprID, reg);
   }
 }
 
@@ -129,7 +139,7 @@ void wbm_handler() {
 
   int color = 0;
   do {
-    printf("choose a color:");
+    printf("choose a color:\n");
     printf("[1] YELLOW;\n");
     printf("[2] GREEN;\n");
     printf("[3] RED;\n");
@@ -137,14 +147,18 @@ void wbm_handler() {
     printf("[5] PURPLE;\n");
     printf("[6] CYAN;\n");
     printf("[7] WHITE;\n");
-    printf("[8] BLACK;\n> ");
+    printf("[8] BLACK;\n");
+    printf("[0] DISABLE;\n> ");
     scanf("%d", &color);
-    if (color <= 0 || color > 8) {
-      printf("Unsuported color");
+    if (color < 0 || color > 8) {
+      printf("Unsuported color\n");
     }
-  } while (color <= 0 || color > 8);
+  } while (color < 0 || color > 8);
   switch (color) {
 
+  case 0:
+    wbm(DISABLED, (80 * l) + c);
+    break;
   case 1:
     wbm(YELLOW, (80 * l) + c);
     break;
@@ -171,13 +185,16 @@ void wbm_handler() {
     break;
   }
 }
-void triangle_handler(){
+void triangle_handler() {
   unsigned short size, ptY, ptX, reg;
+  unsigned int pos;
   printf("Insert the size, ptY, ptX and reg\n> ");
-  scanf("%hu %hu %hu %hu", &size,&ptY,&ptX,&reg);
+  scanf("%hu %hu %hu %hu", &size, &ptY, &ptX, &reg);
+  pos = ptY << 9;
+  pos += ptX;
   int color = 0;
   do {
-    printf("choose a color:");
+    printf("choose a color:\n");
     printf("[1] YELLOW;\n");
     printf("[2] GREEN;\n");
     printf("[3] RED;\n");
@@ -188,45 +205,48 @@ void triangle_handler(){
     printf("[8] BLACK;\n> ");
     scanf("%d", &color);
     if (color <= 0 || color > 8) {
-      printf("Unsuported color");
+      printf("Unsuported color\n");
     }
   } while (color <= 0 || color > 8);
   switch (color) {
 
   case 1:
-    dp_triangle(YELLOW, size, ptY, ptX, reg);
+    dp_triangle(YELLOW, size, pos, reg);
     break;
   case 2:
-    dp_triangle(GREEN, size, ptY, ptX, reg);
+    dp_triangle(GREEN, size, pos, reg);
     break;
   case 3:
-    dp_triangle(RED, size, ptY, ptX, reg);
+    dp_triangle(RED, size, pos, reg);
     break;
   case 4:
-    dp_triangle(BLUE, size, ptY, ptX, reg);
+    dp_triangle(BLUE, size, pos, reg);
     break;
   case 5:
-    dp_triangle(PURPLE, size, ptY, ptX, reg);
+    dp_triangle(PURPLE, size, pos, reg);
     break;
   case 6:
-    dp_triangle(CYAN, size, ptY, ptX, reg);
+    dp_triangle(CYAN, size, pos, reg);
     break;
   case 7:
-    dp_triangle(WHITE, size, ptY, ptX, reg);
+    dp_triangle(WHITE, size, pos, reg);
     break;
   case 8:
-    dp_triangle(BLACK, size, ptY, ptX, reg);
+    dp_triangle(BLACK, size, pos, reg);
     break;
   }
 }
-void square_handler(){
+void square_handler() {
 
   unsigned short size, ptY, ptX, reg;
+  unsigned int pos;
   printf("Insert the size, ptY, ptX and reg\n> ");
-  scanf("%hu %hu %hu %hu", &size,&ptY,&ptX,&reg);
+  scanf("%hu %hu %hu %hu", &size, &ptY, &ptX, &reg);
+  pos = ptY << 9;
+  pos += ptX;
   int color = 0;
   do {
-    printf("choose a color:");
+    printf("choose a color:\n");
     printf("[1] YELLOW;\n");
     printf("[2] GREEN;\n");
     printf("[3] RED;\n");
@@ -237,38 +257,38 @@ void square_handler(){
     printf("[8] BLACK;\n> ");
     scanf("%d", &color);
     if (color <= 0 || color > 8) {
-      printf("Unsuported color");
+      printf("Unsuported color\n");
     }
   } while (color <= 0 || color > 8);
   switch (color) {
 
   case 1:
-    dp_square(YELLOW, size, ptY, ptX, reg);
+    dp_square(YELLOW, size, pos, reg);
     break;
   case 2:
-    dp_square(GREEN, size, ptY, ptX, reg);
+    dp_square(GREEN, size, pos, reg);
     break;
   case 3:
-    dp_square(RED, size, ptY, ptX, reg);
+    dp_square(RED, size, pos, reg);
     break;
   case 4:
-    dp_square(BLUE, size, ptY, ptX, reg);
+    dp_square(BLUE, size, pos, reg);
     break;
   case 5:
-    dp_square(PURPLE, size, ptY, ptX, reg);
+    dp_square(PURPLE, size, pos, reg);
     break;
   case 6:
-    dp_square(CYAN, size, ptY, ptX, reg);
+    dp_square(CYAN, size, pos, reg);
     break;
   case 7:
-    dp_square(WHITE, size, ptY, ptX, reg);
+    dp_square(WHITE, size, pos, reg);
     break;
   case 8:
-    dp_square(BLACK, size, ptY, ptX, reg);
+    dp_square(BLACK, size, pos, reg);
     break;
   }
 }
-void buttos_handler(){
+void buttos_handler() {
   int btn;
   do {
     system("clear");
@@ -277,6 +297,7 @@ void buttos_handler(){
     printf("btn: %d", btn);
   } while (btn != 1);
 }
-void hex_display_handler(){
-  set_hex(0b0001001000001100, 0b00001110000110000000000000000000); // i should change this later
+void hex_display_handler() {
+  set_hex(0b0001001000001100,
+          0b00001110000110000000000000000000); // i should change this later
 }

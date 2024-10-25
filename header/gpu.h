@@ -1,14 +1,15 @@
 #ifndef GPU_H
 #define GPU_H
 
-#define RED    0b000000111
-#define GREEN  0b000111000
-#define BLUE   0b111000000
-#define YELLOW 0b000111111
-#define PURPLE 0b111000111
-#define CYAN   0b111111000
-#define WHITE  0b111111111
-#define BLACK  0b000000000
+#define RED      0b000000111
+#define GREEN    0b000111000
+#define BLUE     0b111000000
+#define YELLOW   0b000111111
+#define PURPLE   0b111000111
+#define CYAN     0b111111000
+#define WHITE    0b111111111
+#define BLACK    0b000000000
+#define DISABLED 0b111111110
 
 
 typedef unsigned short u_short ;
