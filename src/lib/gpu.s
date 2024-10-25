@@ -108,6 +108,7 @@ check_fifo:
   str r1, [sp, #0]
   
   ldr r0, =mapped_address
+  ldr r0, [r0]
 checking:
   ldr r1, [r0, #0xb0] 
   CMP r1, #1
@@ -138,7 +139,11 @@ wbm:
   str r0, [r2, #data_b] @ inserindo bgr no dataB
   str r2, [r2, #data_a] @ inserindo memoria e upcode no dataA
   
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
+  ldr lr, [sp, #0]
+  add sp, sp, #4
 
   mov r1, #1
   str r1, [r2, #wrreg] @ ativando wrreg
@@ -169,10 +174,15 @@ wbr_bg:
   str r1, [r0, #data_a]
   mov r1, #1
 
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
-  ldr r1, [r1, #wrreg]
+  ldr lr, [sp, #0]
+  add sp, sp, #4
+
+  str r1, [r1, #wrreg]
   mov r1, #0
-  ldr r1, [r1, #wrreg]
+  str r1, [r1, #wrreg]
 
   ldr r0, [sp, #4]
   ldr r1, [sp, #0]
@@ -183,10 +193,9 @@ wbr_bg:
 @ Mostra um sprite na tela
 @ Argumentos:
 @ r0, sp (habilita o sprite) 1 bit
-@ r1, pos_x 10 bits
-@ r2, pos_y 10 bits
-@ r3, offset (escolha do sprite na memoria) 9 bits
-@ r4, registrador (layer de exibição) 5 bits
+@ r1, pos_x_y 30 bits (só da pra passar até o r3 como parâmetro)
+@ r2, offset (escolha do sprite na memoria) 9 bits
+@ r3, registrador (layer de exibição) 5 bits quanto mais próximo de 0 mais alto
 wbr_sp:
 
   sub sp, sp, #24
@@ -195,34 +204,35 @@ wbr_sp:
   str r2, [sp, #12]
   str r3, [sp, #8]
   str r4, [sp, #4]
-  str r5, [sp, #0]
 
-  ldr r5, =mapped_address
-  ldr r5, [r5]
+  ldr r4, =mapped_address
+  ldr r4, [r4]
   
-  lsl r0, r0, #10
+  lsl r0, r0, #20 @ adicionando pos x_y
   add r0, r0, r1
-  lsl r0, r0, #10
+  lsl r0, r0, #9 @ adicionando offset
   add r0, r0, r2
-  lsl r0, r0, #9
-  add r0, r0, r3
-  str r0, [r5, #data_b]
+  str r0, [r4, #data_b]
   
-  lsl r0, r4, #4
-  str r0, [r5, #data_a]
+  lsl r0, r3, #4 @ adicionando upcode
+  str r0, [r4, #data_a]
   
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
+  ldr lr, [sp, #0]
+  add sp, sp, #4
+
   mov r0, #1
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
   mov r0, #0
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
   
   ldr r0, [sp, #20]
   ldr r1, [sp, #16]
   ldr r2, [sp, #12]
   ldr r3, [sp, #8]
   ldr r4, [sp, #4]
-  ldr r5, [sp, #0]
   add sp, sp, #24
 
   bx lr
@@ -230,7 +240,7 @@ wbr_sp:
 @ ------------------------------------------------------ @
 @ ------------------------------------------------------ @
 
-@ Salva um sprite na memoria
+@ Altera um pixel de um sprite na memória
 @ Argumentos:
 @ r0 -> Endereço a ser acessado
 @ r1 -> Valor BGR
@@ -250,7 +260,12 @@ wsm:
 
   str r1, [r2, #data_b]
 
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
+  ldr lr, [sp, #0]
+  add sp, sp, #4
+
   mov r1, #1
   str r1, [r2, #wrreg]
   mov r1, #0
@@ -268,9 +283,8 @@ wsm:
 @ Argumentos:
 @ r0 -> Código BGR
 @ r1 -> Tamanho
-@ r2 -> Ponto de referência X
-@ r3 -> Ponto de referência Y
-@ r4 -> endereço de destino
+@ r2 -> Ponto de referência Y_X
+@ r3 -> endereço de destino
 dp_triangle:
   sub sp, sp, #24
   str r0, [sp, #20]
@@ -278,42 +292,42 @@ dp_triangle:
   str r2, [sp, #12]
   str r3, [sp, #8]
   str r4, [sp, #4]
-  str r5, [sp, #0]
   
-  mov r5, #1 @ adicionando sp
+  mov r4, #1 @ adicionando forma
 
-  lsl r5, r5, #9 
-  add r0, r5, r0 @ adicionando cor 
+  lsl r4, r4, #9 
+  add r0, r4, r0 @ adicionando cor 
 
   lsl r0, r0, #4
   add r0, r0, r1 @ adicionando o tamanho
 
-  lsl r0, r0, #9
-  add r0, r0, r3 @ adicionando ref_point y
+  lsl r0, r0, #18
+  add r0, r0, r3 @ adicionando ref_point y_x
 
-  lsl r0, r0, #9
-  add r0, r0, r2 @ adicionando ref_point x
-
-  ldr r5, =mapped_address 
-  ldr r5, [r5]
-  str r0, [r5, #data_b]
+  ldr r4, =mapped_address 
+  ldr r4, [r4]
+  str r0, [r4, #data_b]
   
-  lsl r0, r4, #4
+  lsl r0, r3, #4 
   add r0, r0, #0b0011
-  str r0, [r5, #data_a]
+  str r0, [r4, #data_a]
   
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
+  ldr lr, [sp, #0]
+  add sp, sp, #4
+
   mov r0, #1
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
   mov r0, #0
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
 
   ldr r0, [sp, #20]
   ldr r1, [sp, #16]
   ldr r2, [sp, #12]
   ldr r3, [sp, #8]
   ldr r4, [sp, #4]
-  ldr r5, [sp, #0]
   add sp, sp, #24
 
   bx lr
@@ -323,9 +337,8 @@ dp_triangle:
 @ Argumentos:
 @ r0 -> Código BGR
 @ r1 -> Tamanho
-@ r2 -> Ponto de referência X
-@ r3 -> Ponto de referência Y
-@ r4 -> endereço de destino
+@ r2 -> Ponto de referência Y_X
+@ r3 -> endereço de destino da instrução, quanto mais proximos a 0 mais abaixo ficam
 dp_square:
   sub sp, sp, #24
   str r0, [sp, #20]
@@ -333,42 +346,42 @@ dp_square:
   str r2, [sp, #12]
   str r3, [sp, #8]
   str r4, [sp, #4]
-  str r5, [sp, #0]
   
-  mov r5, #0 @ adicionando sp
+  mov r4, #0 @ adicionando forma
 
-  lsl r5, r5, #9 
-  add r0, r5, r0 @ adicionando cor 
+  lsl r4, r4, #9 
+  add r0, r4, r0 @ adicionando cor 
 
   lsl r0, r0, #4
   add r0, r0, r1 @ adicionando o tamanho
 
-  lsl r0, r0, #9
-  add r0, r0, r3 @ adicionando ref_point y
+  lsl r0, r0, #18
+  add r0, r0, r3 @ adicionando ref_point y_x
 
-  lsl r0, r0, #9
-  add r0, r0, r2 @ adicionando ref_point x
-
-  ldr r5, =mapped_address 
-  ldr r5, [r5]
-  str r0, [r5, #data_b]
+  ldr r4, =mapped_address 
+  ldr r4, [r4]
+  str r0, [r4, #data_b]
   
-  lsl r0, r4, #4
+  lsl r0, r3, #4
   add r0, r0, #0b0011
-  str r0, [r5, #data_a]
+  str r0, [r4, #data_a]
   
+  sub sp, sp, #4
+  str lr, [sp, #0]
   bl check_fifo
+  ldr lr, [sp, #0]
+  add sp, sp, #4
+
   mov r0, #1
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
   mov r0, #0
-  str r0, [r5, #wrreg]
+  str r0, [r4, #wrreg]
 
   ldr r0, [sp, #20]
   ldr r1, [sp, #16]
   ldr r2, [sp, #12]
   ldr r3, [sp, #8]
   ldr r4, [sp, #4]
-  ldr r5, [sp, #0]
   add sp, sp, #24
 
   bx lr
@@ -419,6 +432,8 @@ read_keys:
 
   ldr r1, [sp, #0]
   add sp, sp, #4
+  
+  bx lr
 
 
 .data

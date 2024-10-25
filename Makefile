@@ -1,7 +1,8 @@
 build:
-	as -g -o ./obj/gpu.o ./src/lib/gpu.s
+	as -g -o /gpu.o ./src/lib/gpu.s
+	mv gpu.o ./obj/gpu.o
 
 run: build 
-	gcc ./src/jarvis.c -o run ./obj/*.o
+	gcc ./src/jarvis.c -o run gpu.o
 
 
