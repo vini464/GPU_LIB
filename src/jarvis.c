@@ -13,7 +13,7 @@ void hex_display_handler();
 
 int main(void) {
 
-  int choice, testing = 0;
+  int choice, testing = 1;
   gpu_open();
   do {
 
@@ -28,8 +28,37 @@ int main(void) {
     printf("[8] HEX-DISPLAY;\n");
     printf("[0] Exit.\n> ");
     scanf("%d", &choice);
-    switch (choice) {}
+    switch (choice) {
+      case 0:
+      testing = 0;
+      break;
+    case 1:
+      wbr_bg_handler();
+      break;
+    case 2:
+      wbr_sp_handler();
+      break;
+    case 3:
+      wsm_handler();
+      break;
+    case 4:
+      wbm_handler();
+      break;
+    case 5:
+      triangle_handler();
+      break;
+    case 6:
+      square_handler();
+      break;
+    case 7:
+      buttos_handler();
+      break;
+    case 8:
+      hex_display_handler();
+      break;
+    }
   } while (testing);
+  printf("saindo...\n");
   gpu_close();
   return 0;
 }
@@ -103,6 +132,8 @@ void wbr_sp_handler() {
         pos = posx << 10;
         pos += posy;
         wbr_sp(1, pos, sprID, reg);
+        sprID ++;
+        reg ++;
       }
     }
   } else {

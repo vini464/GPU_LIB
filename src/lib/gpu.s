@@ -137,7 +137,7 @@ wbm:
   add r1, r1, #0b0010
 
   str r0, [r2, #data_b] @ inserindo bgr no dataB
-  str r2, [r2, #data_a] @ inserindo memoria e upcode no dataA
+  str r1, [r2, #data_a] @ inserindo memoria e upcode no dataA
   
   sub sp, sp, #4
   str lr, [sp, #0]
