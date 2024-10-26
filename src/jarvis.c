@@ -1,6 +1,5 @@
 #include "../header/gpu.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 void wbr_bg_handler();
 void wbr_sp_handler();
@@ -322,10 +321,10 @@ void square_handler() {
 void buttos_handler() {
   int btn;
   do {
-    system("clear");
     btn = read_keys();
     btn = ~btn;
-    printf("btn: %d", btn);
+    btn = btn & 0b1111;
+    printf("btn: %d\n", btn);
   } while (btn != 1);
 }
 void hex_display_handler() {

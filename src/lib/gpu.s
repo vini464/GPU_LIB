@@ -1,3 +1,4 @@
+@ vim:ft=armv5
 .global gpu_open
 .type gpu_open, %function
 .global gpu_close
@@ -162,6 +163,7 @@ wbm:
 @ Argumentos:
 @ r0 -> Valor BGR
 wbr_bg:
+
   sub sp, sp, #8 
   str r0, [sp, #4]
   str r1, [sp, #0]
@@ -170,9 +172,9 @@ wbr_bg:
   ldr r1, [r1]
 
   str r0, [r1, #data_b]
-  mov r1, #0 @ upcode + registrador (ambos são 0)
-  str r1, [r0, #data_a]
-  mov r1, #1
+  mov r0, #0 @ upcode + registrador (ambos são 0)
+  str r0, [r1, #data_a]
+  mov r0, #1
 
   sub sp, sp, #4
   str lr, [sp, #0]
@@ -180,13 +182,14 @@ wbr_bg:
   ldr lr, [sp, #0]
   add sp, sp, #4
 
-  str r1, [r1, #wrreg]
-  mov r1, #0
-  str r1, [r1, #wrreg]
+  str r0, [r1, #wrreg]
+  mov r0, #0
+  str r0, [r1, #wrreg]
 
   ldr r0, [sp, #4]
   ldr r1, [sp, #0]
-  add sp, sp, #4
+  add sp, sp, #8
+
 
   bx lr
 
