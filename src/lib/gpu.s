@@ -280,7 +280,56 @@ wsm:
   add sp, sp, #12
 
   bx lr
+@@ wsm v2
+@ argumentos:
+@ r0 -> Vetor com 400 posições indicando a cor de cada pixel;
+@ r1 -> Offset (em qual espaço da memória o sprite vai ficar)
+save_sprite:
+  sub sp, sp, #36
+  str r0, [sp, #0]
+  str r1, [sp, #4]
+  str r2, [sp, #8]
+  str r3, [sp, #12]
+  str r4, [sp, #16]
+  str r5, [sp, #20]
+  str r6, [sp, #24]
+  str r7, [sp, #28]
+  str lr, [sp, #32]
 
+
+  mov r6, r0 @ salvando o endereço do vetor para liberar o r0
+  mov r7, r1 @ salvando o offset para liberar o r1
+
+  ldr r3, =max_values
+  ldr r3, [r3, #0]
+  mov r4, #0 @ contador do for
+  mov r5, #0 @ indice do vetor
+save_spr_for:
+  cmp r3, r4
+  beq end_save_spr
+
+  add r0, r4, r7   @ guarda em r0 o endereço onde determiado pixel deve ser salvo
+  ldr r1, [r6, r5] @ guarda em r1 a cor que determinado pixel deve ter
+  
+  bl wsm @ escreve o pixel na memória de sprites
+
+  add r4, #1
+  add r5, #4
+  b save_spr_for
+
+end_save_spr:
+  ldr r0, [sp, #0]
+  ldr r1, [sp, #4]
+  ldr r2, [sp, #8]
+  ldr r3, [sp, #12]
+  ldr r4, [sp, #16]
+  ldr r5, [sp, #20]
+  ldr r6, [sp, #24]
+  ldr r7, [sp, #28]
+  ldr lr, [sp, #32]
+  add sp, sp, #36
+
+  bx lr
 @ ------------------------------------------------------ @
 @ ------------------------------------------------------ @
 @ Argumentos:
@@ -444,4 +493,6 @@ read_keys:
   fpga_bridge: .word 0xff200 @ já dividido por 4Kb
   mapped_address: .space 4
   fd: .space 4
+  max_values: .word 400, 4800
+
 

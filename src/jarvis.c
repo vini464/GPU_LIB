@@ -1,6 +1,22 @@
 #include "../header/gpu.h"
 #include <stdio.h>
 
+typedef struct Sprite Sprite;
+typedef struct node Node;
+
+struct Sprite {
+  unsigned short pixels[20][20];
+  int HEIGHT: 20; // não sei se isso funciona
+  int WIDTH: 20;
+};
+
+struct node {
+  Sprite spr;
+  Node *next;
+};
+
+Node *ready_sprites;
+
 void wbr_bg_handler();
 void wbr_sp_handler();
 void wsm_handler();
@@ -11,7 +27,7 @@ void buttos_handler();
 void hex_display_handler();
 
 int main(void) {
-
+  Sprite spr;
   int choice, testing = 1;
   gpu_open();
   do {

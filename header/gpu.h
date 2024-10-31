@@ -11,6 +11,9 @@
 #define BLACK    0b000000000
 #define DISABLED 0b111111110
 
+#define ONE      0b11111100
+#define TWO      0b10100100
+#define THREE    
 
 typedef unsigned short u_short ;
 void gpu_open();

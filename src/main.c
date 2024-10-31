@@ -36,15 +36,12 @@ int main(void) {
   startAccelListener();
   LISTEN_BTN = LISTEN_ACCEL = 1; // habilita a leitura do acelerômetro e dos botões
   // criação das threads
-printf("inicio\n");
   pthread_create(&accel_t, NULL, accelListener, NULL);
   pthread_create(&btns_t, NULL, buttonListener, NULL);
-printf("criou as threads\n");
 
   while (1) {
     BUTTON = 0;
     // espera o jogador iniciar o jogo
-printf("entrou no while\n");
 
     if (!start) {
       printf("pressione algum botão para iniciar\n");
@@ -61,6 +58,7 @@ printf("entrou no while\n");
     // roda o jogo, até o jogador perder, desistir ou reiniciar
     game();
     usleep(1000);
+    clearVideo();
 
     if (GAMEOVER) { // se ele perdeu mostra a tela de game over
       BUTTON = 0;
@@ -174,7 +172,6 @@ void *accelListener(void *arg) {
     if (dir != STOP && !PAUSED && !GAMEOVER) {
 
       movePiece(&ACTUAL_PIECE, BOARDHEIGHT, BOARDWIDTH, BOARD, dir, &GAMEOVER);
-      showMatrix(BOARDHEIGHT, BOARDWIDTH, BOARD, PAUSED, WIDTH_CENTER);
     }
     dir = STOP;
     usleep(200000);
@@ -186,22 +183,24 @@ void stopAccelListener() { close_and_unmap_dev_mem(FD); }
 void *buttonListener(void *arg){
   int btn = 0;
   while (LISTEN_BTN) {
-    usleep(200000);
     btn = read_keys();
     btn = (~btn) & 0b1111;
     if (btn == 1 && BUTTON != 4){
       BUTTON = 4;
+    usleep(200000);
     }
     else if (btn == 2 && BUTTON != 3){
       BUTTON = 3;
+    usleep(200000);
     }
     else if (btn == 4 && BUTTON != 2){
       BUTTON = 2;
+    usleep(200000);
     }
     else if (btn == 8 ){
       BUTTON = 1;
+    usleep(200000);
     }
-    btn = 0;
 }
   return NULL;
 }
