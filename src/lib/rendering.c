@@ -35,25 +35,58 @@ void showMatrix(int height, int width, Color matrix[height][width], int paused,
 }
 
 void showHex(unsigned int number) { // number should be < 1000000
-  unsigned int algs[6];
+  unsigned int algs[6], aux;
   int c;
+  for (c = 0; c < 6; c++)
+    algs[c] = 0;
+
   for (c = 0; c < 6; c++) {
-    algs[c] = number % 10;
+    aux = number % 10;
+    switch (aux) {
+      case 0: 
+        algs[c] = ZERO;
+        break;
+      case 1: 
+        algs[c] = ONE;
+        break;
+      case 2: 
+        algs[c] = TWO;
+        break;
+      case 3: 
+        algs[c] = THREE;
+        break;
+      case 4: 
+        algs[c] = FOUR;
+        break;
+      case 5: 
+        algs[c] = FIVE;
+        break;
+      case 6: 
+        algs[c] = SIX;
+        break;
+      case 7: 
+        algs[c] = SEVEN;
+        break;
+      case 8: 
+        algs[c] = EIGHT;
+        break;
+      case 9: 
+        algs[c] = NINE;
+        break;
+    }
     number /= 10;
   }
-  unsigned short d1, d2;
-  d1 = algs[0];
-  d1 = d1<< 8;
-  d1 += algs[1];
-
-  d2 = algs[2];
-  d2 = d2 << 8;
-
-  d2 += algs[3];
-  d2 = d2 << 8;
-
-  d2 += algs[4];
-  d2 = d2 << 8;
-
-  d2 += algs[5];
+  aux = 0;
+  for (c=0; c < 4; c++){
+    aux += algs[c] << 8*c;
+}
+  unsigned int aux2;
+  aux = 0;
+printf("%d\n", aux2);
+  aux2 += algs[4];
+printf("%d\n", aux2);
+  aux2 += algs[5] <<  8;
+printf("-%d\n", aux2);
+  set_hex(aux2, aux);
+  
 }

@@ -93,7 +93,6 @@ void game() {
   BUTTON = 0;
   int j, k;
   PTS = 0;
-  printf("pontuacao: %d\n", PTS);
   GAMEOVER = FALSE;
 // limpa a matriz
   for (j = 0; j < BOARDHEIGHT; j++) {
@@ -102,6 +101,8 @@ void game() {
   }
   int collide;
   while (GAMEOVER == FALSE) { // enquanto o jogador não perdeu
+  printf("pontuacao: %d\n", PTS);
+  showHex(PTS);
     collide = FALSE;
     ACTUAL_PIECE = getPiece(rand() % 17); // pega uma peça aleatória
     ACTUAL_PIECE.color = getColor(rand() % 6); // atribui uma cor aleatória para a peça
