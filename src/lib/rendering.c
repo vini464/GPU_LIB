@@ -7,7 +7,9 @@ void clearVideo() {
   for (cont = 0; cont < 4800; cont++)
     wbm(DISABLED, cont);
   for (cont = 1; cont < 32; cont++)
-    wbr_sp(0, 0, 0, cont);
+    wbr_sp(0, 0, 0, 0, cont);
+  for (cont = 0; cont < 32; cont++)
+    dp_square(0, 0, 0, 0, cont);
 }
 
 void shutdownScreen() {
@@ -81,12 +83,8 @@ void showHex(unsigned int number) { // number should be < 1000000
     aux += algs[c] << 8*c;
 }
   unsigned int aux2;
-  aux = 0;
-printf("%d\n", aux2);
-  aux2 += algs[4];
-printf("%d\n", aux2);
+  aux2 = algs[4];
   aux2 += algs[5] <<  8;
-printf("-%d\n", aux2);
   set_hex(aux2, aux);
   
 }
