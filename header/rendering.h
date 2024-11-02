@@ -30,5 +30,6 @@ void clearVideo();
  * Limpa o vídeo e fecha o arquivo para escrita no VGA
  **/
 void shutdownScreen();
+void showHex(unsigned int);
 
 #endif // !REDENRING_H

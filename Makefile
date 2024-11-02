@@ -1,5 +1,5 @@
 source_game:
-	gcc -c ./src/lib/*.o
+	gcc -c ./src/lib/*.c
 	mv *.o ./obj/
 
 build:
@@ -10,8 +10,11 @@ run: build
 	gcc ./src/jarvis.c -o run ./obj/gpu.o
 
 run_game: source_game build
-	gcc ./src/main.c -o tetriz ./obj/*.o
+	gcc ./src/main.c -o tetriz ./obj/*.o -lpthread
+	sudo ./tetriz
 
 play:
 	sudo ./tetriz
 
+clear:
+	rm ./obj/*.o

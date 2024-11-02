@@ -30,10 +30,10 @@ int main(void) {
   int d, reset = 0, start = 0;
   boolean collide = FALSE;
   pthread_t btns_t, accel_t;
+  initScreen();
 
   // configuração inicial
   startAccelListener();
-  initScreen();
   LISTEN_BTN = LISTEN_ACCEL = 1; // habilita a leitura do acelerômetro e dos botões
   // criação das threads
   pthread_create(&accel_t, NULL, accelListener, NULL);
@@ -42,9 +42,11 @@ int main(void) {
   while (1) {
     BUTTON = 0;
     // espera o jogador iniciar o jogo
+
     if (!start) {
-      printf("pressione algum botão para iniciar");
+      printf("pressione algum botão para iniciar\n");
       while (!start) {
+//printf("esperando botão\n");
         if (BUTTON != 0) {
           start = 1;
           BUTTON = 0;
@@ -56,6 +58,7 @@ int main(void) {
     // roda o jogo, até o jogador perder, desistir ou reiniciar
     game();
     usleep(1000);
+    clearVideo();
 
     if (GAMEOVER) { // se ele perdeu mostra a tela de game over
       BUTTON = 0;
@@ -69,6 +72,7 @@ int main(void) {
       if (!reset)
         break;
     } else { 
+	printf("saiu\n");
       if (OUT) // caso ele tenha desistido encerra o loop do jogo
         break;
       GAMEOVER = FALSE;
@@ -86,36 +90,41 @@ int main(void) {
 }
 
 void game() {
+  BUTTON = 0;
   int j, k;
   PTS = 0;
-  printf("pontuacao: %d\n", PTS);
   GAMEOVER = FALSE;
 // limpa a matriz
   for (j = 0; j < BOARDHEIGHT; j++) {
     for (k = 0; k < BOARDWIDTH; k++)
-      BOARD[j][k] = WHITE;
+      BOARD[j][k] = 0;
   }
   int collide;
   while (GAMEOVER == FALSE) { // enquanto o jogador não perdeu
+  printf("pontuacao: %d\n", PTS);
+  showHex(PTS);
     collide = FALSE;
     ACTUAL_PIECE = getPiece(rand() % 17); // pega uma peça aleatória
     ACTUAL_PIECE.color = getColor(rand() % 6); // atribui uma cor aleatória para a peça
     while (!collide) {
       if (BUTTON == 1) { // pausa o jogo
-        PAUSED = TRUE;
         BUTTON = 0;
+        PAUSED = TRUE;
       }
       while (PAUSED) {
+//        printf("btn: %d\n", BUTTON);
         if (BUTTON > 0 && BUTTON < 4) { // continua o jogo
           PAUSED = FALSE;
-          BUTTON = 0;
           if (BUTTON == 2) { // reinicia o jogo
+printf("reiniciando...\n");
             return;
           }
           if (BUTTON == 3) { // encerra o jogo
+printf("saindo...\n");
             OUT = 1;
             return;
           }
+          BUTTON = 0;
         }
       }
       collide = movePiece(&ACTUAL_PIECE, BOARDHEIGHT, BOARDWIDTH, BOARD, DOWN,
@@ -164,7 +173,6 @@ void *accelListener(void *arg) {
     if (dir != STOP && !PAUSED && !GAMEOVER) {
 
       movePiece(&ACTUAL_PIECE, BOARDHEIGHT, BOARDWIDTH, BOARD, dir, &GAMEOVER);
-      showMatrix(BOARDHEIGHT, BOARDWIDTH, BOARD, PAUSED, WIDTH_CENTER);
     }
     dir = STOP;
     usleep(200000);
@@ -177,18 +185,23 @@ void *buttonListener(void *arg){
   int btn = 0;
   while (LISTEN_BTN) {
     btn = read_keys();
-    if (btn == 1){
+    btn = (~btn) & 0b1111;
+    if (btn == 1 && BUTTON != 4){
       BUTTON = 4;
+    usleep(200000);
     }
-    else if (btn == 2){
+    else if (btn == 2 && BUTTON != 3){
       BUTTON = 3;
+    usleep(200000);
     }
-    else if (btn == 4){
+    else if (btn == 4 && BUTTON != 2){
       BUTTON = 2;
+    usleep(200000);
     }
-    else if (btn == 8){
+    else if (btn == 8 ){
       BUTTON = 1;
+    usleep(200000);
     }
-  }
+}
   return NULL;
 }
