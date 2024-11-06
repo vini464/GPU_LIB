@@ -319,7 +319,7 @@ save_spr_for:
   bl wsm @ escreve o pixel na memória de sprites
 
   add r4, #1
-  add r5, #4
+  add r5, #2
   b save_spr_for
 
 end_save_spr:
