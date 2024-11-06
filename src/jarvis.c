@@ -4,10 +4,12 @@
 typedef struct Sprite Sprite;
 typedef struct node Node;
 
+unsigned short snake[400];
+
 struct Sprite {
   unsigned short pixels[20][20];
-  int HEIGHT: 20; // não sei se isso funciona
-  int WIDTH: 20;
+  int HEIGHT : 20; // não sei se isso funciona
+  int WIDTH : 20;
 };
 
 struct node {
@@ -25,6 +27,7 @@ void triangle_handler();
 void square_handler();
 void buttos_handler();
 void hex_display_handler();
+void clear_video();
 
 int main(void) {
   Sprite spr;
@@ -41,10 +44,11 @@ int main(void) {
     printf("[6] DP_SQUARE;\n");
     printf("[7] BUTTONS;\n");
     printf("[8] HEX-DISPLAY;\n");
+    printf("[9] Limpar tela;\n");
     printf("[0] Exit.\n> ");
     scanf("%d", &choice);
     switch (choice) {
-      case 0:
+    case 0:
       testing = 0;
       break;
     case 1:
@@ -70,6 +74,9 @@ int main(void) {
       break;
     case 8:
       hex_display_handler();
+      break;
+    case 9:
+      clear_video();
       break;
     }
   } while (testing);
@@ -127,7 +134,6 @@ void wbr_sp_handler() {
   int choice = 0;
   int unsigned short posx, posy;
   int unsigned short sprID, reg;
-  unsigned int pos;
   do {
     printf("What you want to do?\n");
     printf("[1] show a single sprite.\n");
@@ -144,11 +150,9 @@ void wbr_sp_handler() {
       for (c = 0; c < 5; c++) {
         posx = c * 20;
         posy = l * 20;
-        pos = posx << 10;
-        pos += posy;
-        wbr_sp(1, pos, sprID, reg);
-        sprID ++;
-        reg ++;
+        wbr_sp(1, posx, posy, sprID, reg);
+        sprID++;
+        reg++;
       }
     }
   } else {
@@ -161,18 +165,19 @@ void wbr_sp_handler() {
     do {
       printf("Insert the sprite id and the register\n> ");
       scanf("%hu %hu", &sprID, &reg);
-      if (sprID <= 0 || reg < 0 || sprID > 31 || reg > 31)
+      if (sprID < 0 || reg <= 0 || sprID > 31 || reg > 31)
         printf("you typed something wrong!\n");
-    } while (sprID <= 0 || reg < 0 || sprID > 31 || reg > 31);
+    } while (sprID < 0 || reg <= 0 || sprID > 31 || reg > 31);
 
-    pos = posx << 10;
-    pos += posy;
-    wbr_sp(1, pos, sprID, reg);
+    wbr_sp(1, posx, posy, sprID, reg);
   }
 }
 
 void wsm_handler() { // vai ficar pra depois
-  printf("nothing to do yet\n");
+  int address;
+  printf("indique onde voce quer guardar esse sprite: >\n");
+  scanf("%d", &address);
+  save_sprite(snake, address);
 }
 void wbm_handler() {
   int l, c;
@@ -233,11 +238,8 @@ void wbm_handler() {
 }
 void triangle_handler() {
   unsigned short size, ptY, ptX, reg;
-  unsigned int pos;
   printf("Insert the size, ptY, ptX and reg\n> ");
   scanf("%hu %hu %hu %hu", &size, &ptY, &ptX, &reg);
-  pos = ptY << 9;
-  pos += ptX;
   int color = 0;
   do {
     printf("choose a color:\n");
@@ -257,39 +259,36 @@ void triangle_handler() {
   switch (color) {
 
   case 1:
-    dp_triangle(YELLOW, size, pos, reg);
+    dp_triangle(YELLOW, size, ptY, ptX, reg);
     break;
   case 2:
-    dp_triangle(GREEN, size, pos, reg);
+    dp_triangle(GREEN, size, ptY, ptX, reg);
     break;
   case 3:
-    dp_triangle(RED, size, pos, reg);
+    dp_triangle(RED, size, ptY, ptX, reg);
     break;
   case 4:
-    dp_triangle(BLUE, size, pos, reg);
+    dp_triangle(BLUE, size, ptY, ptX, reg);
     break;
   case 5:
-    dp_triangle(PURPLE, size, pos, reg);
+    dp_triangle(PURPLE, size, ptY, ptX, reg);
     break;
   case 6:
-    dp_triangle(CYAN, size, pos, reg);
+    dp_triangle(CYAN, size, ptY, ptX, reg);
     break;
   case 7:
-    dp_triangle(WHITE, size, pos, reg);
+    dp_triangle(WHITE, size, ptY, ptX, reg);
     break;
   case 8:
-    dp_triangle(BLACK, size, pos, reg);
+    dp_triangle(BLACK, size, ptY, ptX, reg);
     break;
   }
 }
 void square_handler() {
 
   unsigned short size, ptY, ptX, reg;
-  unsigned int pos;
   printf("Insert the size, ptY, ptX and reg\n> ");
   scanf("%hu %hu %hu %hu", &size, &ptY, &ptX, &reg);
-  pos = ptY << 9;
-  pos += ptX;
   int color = 0;
   do {
     printf("choose a color:\n");
@@ -309,28 +308,28 @@ void square_handler() {
   switch (color) {
 
   case 1:
-    dp_square(YELLOW, size, pos, reg);
+    dp_square(YELLOW, size, ptY, ptX, reg);
     break;
   case 2:
-    dp_square(GREEN, size, pos, reg);
+    dp_square(GREEN, size, ptY, ptX, reg);
     break;
   case 3:
-    dp_square(RED, size, pos, reg);
+    dp_square(RED, size, ptY, ptX, reg);
     break;
   case 4:
-    dp_square(BLUE, size, pos, reg);
+    dp_square(BLUE, size, ptY, ptX, reg);
     break;
   case 5:
-    dp_square(PURPLE, size, pos, reg);
+    dp_square(PURPLE, size, ptY, ptX, reg);
     break;
   case 6:
-    dp_square(CYAN, size, pos, reg);
+    dp_square(CYAN, size, ptY, ptX, reg);
     break;
   case 7:
-    dp_square(WHITE, size, pos, reg);
+    dp_square(WHITE, size, ptY, ptX, reg);
     break;
   case 8:
-    dp_square(BLACK, size, pos, reg);
+    dp_square(BLACK, size, ptY, ptX, reg);
     break;
   }
 }
@@ -344,6 +343,68 @@ void buttos_handler() {
   } while (btn != 1);
 }
 void hex_display_handler() {
-  set_hex(0b0001001000001100,
-          0b00001110000110000000000000000000); // i should change this later
+  unsigned int number;
+  printf("Insira um número de 0 a 999999\n> ");
+  scanf("%ud", &number);
+  unsigned int algs[6], aux;
+  int c;
+  for (c = 0; c < 6; c++)
+    algs[c] = 0;
+
+  for (c = 0; c < 6; c++) {
+    aux = number % 10;
+    switch (aux) {
+      case 0: 
+        algs[c] = ZERO;
+        break;
+      case 1: 
+        algs[c] = ONE;
+        break;
+      case 2: 
+        algs[c] = TWO;
+        break;
+      case 3: 
+        algs[c] = THREE;
+        break;
+      case 4: 
+        algs[c] = FOUR;
+        break;
+      case 5: 
+        algs[c] = FIVE;
+        break;
+      case 6: 
+        algs[c] = SIX;
+        break;
+      case 7: 
+        algs[c] = SEVEN;
+        break;
+      case 8: 
+        algs[c] = EIGHT;
+        break;
+      case 9: 
+        algs[c] = NINE;
+        break;
+    }
+    number /= 10;
+  }
+  aux = 0;
+  for (c=0; c < 4; c++){
+    aux += algs[c] << 8*c;
+}
+  unsigned int aux2;
+  aux2 = algs[4];
+  aux2 += algs[5] <<  8;
+  set_hex(aux2, aux);
+  
+}
+
+void clear_video() {
+  unsigned short cont = 0;
+  for (cont = 0; cont < 4800; cont++)
+    wbm(DISABLED, cont);
+  for (cont = 1; cont < 32; cont++)
+    wbr_sp(0, 0, 0, 0, cont);
+  for (cont = 0; cont < 32; cont++)
+    dp_square(0, 0, 0, 0, cont);
+  wbr_bg(BLACK);
 }

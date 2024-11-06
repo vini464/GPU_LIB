@@ -19,6 +19,8 @@
 .type set_hex, %function
 .global read_keys
 .type read_keys, %function
+.global save_sprite
+.type save_sprite, %function
 
 @ Constants
 .equ data_b, 0x70
@@ -175,8 +177,6 @@ wbr_bg:
   str r0, [r1, #data_a]
   mov r0, #1
 
-  sub sp, sp, #4
-  str lr, [sp, #0]
   bl check_fifo
 
   str r0, [r1, #wrreg]
@@ -201,7 +201,7 @@ wbr_bg:
 wbr_sp:
 
   sub sp, sp, #28
-  str lr, [sp, 24]
+  str lr, [sp, #24]
   str r0, [sp, #20]
   str r1, [sp, #16]
   str r2, [sp, #12]
@@ -217,6 +217,8 @@ wbr_sp:
   add r0, r0, r1
   lsl r0, r0, #10 @ adicionando pos_y
   add r0, r0, r2
+  lsl r0, r0, #9  @ adicionando o offset
+  add r0, r0, r3
   str r0, [r4, #data_b]
   
   lsl r0, r5, #4 @ adicionando upcode
@@ -229,14 +231,14 @@ wbr_sp:
   mov r0, #0
   str r0, [r4, #wrreg]
   
-  ldr lr, [sp, 24]
+  ldr lr, [sp, #24]
   ldr r0, [sp, #20]
   ldr r1, [sp, #16]
   ldr r2, [sp, #12]
   ldr r3, [sp, #8]
   ldr r4, [sp, #4]
   str r5, [sp, #0]
-  add sp, sp, #24
+  add sp, sp, #28
 
   bx lr
 
@@ -296,17 +298,22 @@ save_sprite:
 
 
   mov r6, r0 @ salvando o endereço do vetor para liberar o r0
-  mov r7, r1 @ salvando o offset para liberar o r1
+  @mov r7, r1 @ salvando o offset para liberar o r1
 
   ldr r3, =max_values
-  ldr r3, [r3, #0]
-  mov r4, #0 @ contador do for
+  ldr r3, [r3, #0] @ r3 = 400
+
+  mul r7, r1, r3 @ primeiro indice 
+  add r3, r7, r3 @ ultimo indice
+
+  @ mov r4, #0 @ contador do for
+  mov r4, r7
   mov r5, #0 @ indice do vetor
 save_spr_for:
   cmp r3, r4
   beq end_save_spr
 
-  add r0, r4, r7   @ guarda em r0 o endereço onde determiado pixel deve ser salvo
+  mov r0, r4 @ guarda em r0 o endereço onde determiado pixel deve ser salvo
   ldr r1, [r6, r5] @ guarda em r1 a cor que determinado pixel deve ter
   
   bl wsm @ escreve o pixel na memória de sprites
