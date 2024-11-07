@@ -19,7 +19,9 @@ void *accelListener(void *);
 void stopAccelListener();
 // Roda toda a lógica do jogo
 void game();
-
+extern u_short initial_screen[4800];
+extern u_short pause_screen[4800];
+extern u_short end_screen[4800];
 Color BOARD[BOARDHEIGHT][BOARDWIDTH];
 int LISTEN_BTN, LISTEN_ACCEL, BUTTON, FD, WIDTH_CENTER, PTS;
 boolean GAMEOVER, PAUSED = FALSE, OUT = FALSE;
@@ -42,8 +44,8 @@ int main(void) {
   while (1) {
     BUTTON = 0;
     // espera o jogador iniciar o jogo
-
     if (!start) {
+    showScreen(initial_screen);
       printf("pressione algum botão para iniciar\n");
       while (!start) {
 //printf("esperando botão\n");
@@ -61,6 +63,7 @@ int main(void) {
     clearVideo();
 
     if (GAMEOVER) { // se ele perdeu mostra a tela de game over
+      showScreen(end_screen);
       BUTTON = 0;
       while (BUTTON == 0) { // espera o jogador apertar um botão 
         if (BUTTON == 1) { // se ele apertar o botão 1 encerra o programa
@@ -110,6 +113,7 @@ void game() {
       if (BUTTON == 1) { // pausa o jogo
         BUTTON = 0;
         PAUSED = TRUE;
+        showScreen(pause_screen);
       }
       while (PAUSED) {
 //        printf("btn: %d\n", BUTTON);
@@ -125,6 +129,7 @@ printf("saindo...\n");
             return;
           }
           BUTTON = 0;
+          clearVideo();
         }
       }
       collide = movePiece(&ACTUAL_PIECE, BOARDHEIGHT, BOARDWIDTH, BOARD, DOWN,
@@ -186,20 +191,20 @@ void *buttonListener(void *arg){
   while (LISTEN_BTN) {
     btn = read_keys();
     btn = (~btn) & 0b1111;
-    if (btn == 1 && BUTTON != 4){
-      BUTTON = 4;
+    if (btn == 1){
+      BUTTON = 1;
     usleep(200000);
     }
-    else if (btn == 2 && BUTTON != 3){
-      BUTTON = 3;
-    usleep(200000);
-    }
-    else if (btn == 4 && BUTTON != 2){
+    else if (btn == 2){
       BUTTON = 2;
     usleep(200000);
     }
+    else if (btn == 4){
+      BUTTON = 3;
+    usleep(200000);
+    }
     else if (btn == 8 ){
-      BUTTON = 1;
+      BUTTON = 4;
     usleep(200000);
     }
 }

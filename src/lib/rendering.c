@@ -17,6 +17,16 @@ void shutdownScreen() {
   gpu_close();
 }
 
+void showScreen(Color image[4800]){
+  int c;
+  u_short color;
+  for (c =0; c < 4800; c++){
+      color = image[c]; 
+      wbm(color, c);
+  }
+}
+
+
 void showMatrix(int height, int width, Color matrix[height][width], int paused,
                 int width_center) {
   int line, col, x, y;

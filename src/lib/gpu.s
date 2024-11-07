@@ -422,16 +422,18 @@ dp_square:
   add r0, r0, r1 @ adicionando o tamanho
 
   lsl r0, r0, #9
-  add r0, r0, r2 @ adicionando ref_point y_x
+  add r0, r0, r2 @ adicionando ref_point y
   lsl r0, r0, #9
   add r0, r0, r3 @ adicionando ref_point x
 
   ldr r4, =mapped_address 
   ldr r4, [r4]
-  str r0, [r4, #data_b]
   ldr r5, [sp, #28]
+
+  str r0, [r4, #data_b]
   
   lsl r0, r5, #4
+
   add r0, r0, #0b0011
   str r0, [r4, #data_a]
   

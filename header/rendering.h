@@ -9,6 +9,7 @@
  * Abre o arquivo para escrita no VGA, limpa o video e calcula o centro da tela.
  **/
 void initScreen();
+void showScreen(Color matrix[4800]);
 /**
  * Mostra na tela uma mensagem de início de jogo.
  **/
