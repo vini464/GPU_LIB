@@ -23,8 +23,14 @@ Além dos seguintes requisitos, foi solicitado que as instruções fossem feitas
 
 # Assembly
 
-O processador consiste num 800MHz Dual-core ARM Cortex-A9 MPCore processor com Assembly ARMv7, e foi desenvolvido nele as seguintes funções em Assembly.
+O processador consiste num 800MHz Dual-core ARM Cortex-A9 MPCore processor com Assembly ARMv7, e foi desenvolvido nele as seguintes funções em Assembly:
 
-** Imagem do Header **
+![Header do Assembly](ReadMe_files/header.png)
+
+Vale lembrar que todas as funções após iniciarem a sua execução salvam o contexto dos registradores utilizados para sua execução e restauram esse contexto logo antes do retorno da função para evitar conflitos na execução do problema.
+
+As funções que são instruções da GPU funcionam todas de forma muito semelhante
+
+
 
 
