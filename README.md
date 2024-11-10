@@ -145,7 +145,7 @@ Ferramentas auxiliares:
 
 # Conclusão
 
-Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly e mais algumas funções em C, portanto, os principais objetivos do PBL que eram conseguirmos entender como funciona a GPU de Gabriel Sá Barreto e aprendermos e obtermos experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
+Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly e mais algumas funções em C, portanto, os principais objetivos do PBL que eram, conseguir entender como funciona a GPU de Gabriel Sá Barreto e aprender e obter experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
 
 
 
