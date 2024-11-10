@@ -1,4 +1,4 @@
-# Logo
+![Logo](ReadMe_files/inicio.png)
 # Sumario
 
 # Geral
@@ -135,13 +135,9 @@ Editores de texto:
 Linguagem:
 <img src="https://img.shields.io/badge/Linguagem-C-blue?logo=c&logoColor=white"/>
 
-Sistema Operacional:
-<img src="https://img.shields.io/badge/Software-Piskel-blue?logo=piskel&logoColor=white"/>
-
 Ferramentas auxiliares:
-
-
-Ferrak
+<img src="https://img.shields.io/badge/Software-Piskel-blue?style=flat" alt="Piskel Badge" height="25">
+<img src="ReadMe_files/piskel_logo.png" alt="Piskel Logo" height="25">
 
 # Conclusão
 
