@@ -1,4 +1,7 @@
-![Logo](ReadMe_files/inicio.png)
+<p align="center">
+  <img src="ReadMe_files/inicio.gif" alt="Descrição do GIF" width="50%">
+</p>
+
 # Sumario
 
 # Geral
@@ -18,13 +21,14 @@ A biblioteca produzida teve que cumprir os seguintes requisitos:
 
 Além dos seguintes requisitos, foi solicitado que as instruções fossem feitas em Assembly e extendem-se para C.
 
-# Desenvolvimento
-
 # Assembly
 
 O processador consiste num 800MHz Dual-core ARM Cortex-A9 MPCore processor com Assembly ARMv7, e foi desenvolvido nele as seguintes funções em Assembly:
 
-![Header do Assembly](ReadMe_files/header.png)
+<p align="center">
+  <img src="ReadMe_files/header.png" alt="Descrição do GIF" width="50%">
+</p>
+
 
 Vale lembrar que todas as funções após iniciarem a sua execução salvam o contexto dos registradores utilizados para sua execução e restauram esse contexto logo antes do retorno da função para evitar conflitos na execução do problema.
 
