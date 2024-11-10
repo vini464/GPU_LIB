@@ -69,6 +69,44 @@ Para reproduzir os testes você precisará do script jarvis.c.
 
 Esse teste consiste em chamar a função wbr_bg e definir uma cor para ser mostrada, seu resultado deve se parecer com isso:
 
+![Descrição do GIF](ReadMe_files/Background.gif)
+
+### Teste de Sprite
+
+Esse teste consiste em chamar a função para colocar todos os sprites na tela, o seu resultado deve se parecer com isso:
+
+![Descrição do GIF](ReadMe_files/wbr_sp.gif)
+
+### Teste de Adicionar Sprite
+
+Esse teste consiste em adicionar um sprite de uma cobra pre-feita na placa, o seu resultado deve se parecer com isso:
+
+![Descrição do GIF](ReadMe_files/wsm.gif)
+
+### Teste de Triangulo e Quadrado
+
+Esse teste consiste em desenhar um triangulo e um quadrado na tela, caso passe paramentros errados, a GPU tentará printar e resultará em uma imagem parecendo um "post-it", caso coloque parametros validos, o resultado será esse:
+
+![Descrição do GIF](ReadMe_files/dp_triangle.gif)
+![Descrição do GIF](ReadMe_files/dp_square.gif)
+
+### Teste de Background Block
+
+Esse teste consiste em desenhar um background block na tela, o seu resultado deve se parecer com isso:
+
+![Descrição do GIF](ReadMe_files/wbm.gif)
+
+### Teste de 7 Segmentos
+
+Esse teste consiste em passar um número para o 7 segmentos e após isso, deve ser impresso esse número no 7 segmentos:
+
+![Descrição do GIF](ReadMe_files/7_seg.gif)
+
+### Teste de Botão
+
+Esse teste consiste em ficar continuamente lendo a palavra que está associada aos botões, cada botão pode somar +1,+2,+4,+8 na exibição enquanto estiver sendo pressionado, o seu resultado deve se parecer com isso:
+
+![Descrição do GIF](ReadMe_files/botao.gif)
 
 
 # Tecnologias utilizadas:
