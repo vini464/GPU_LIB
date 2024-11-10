@@ -2,10 +2,9 @@
 # Sumario
 
 # Geral
-Nesse projeto foi desenvolvido uma biblioteca em assembly ARMv7 para a utilização da GPU desenvolvida por Gabriel Sá Barreto, para o seu desenvolvimento foi necessario aparender sobre como a GPU funciona, como se comunicar com ela, e adaptar o jogo de Tetriz desenvolvido no problema anterior para a nova plataforma.
+Nesse projeto foi desenvolvido uma biblioteca em assembly ARMv7 para a utilização da GPU desenvolvida por Gabriel Sá Barreto, para o seu desenvolvimento foi necessario aparender sobre como a GPU funciona, como se comunicar com ela e utilizar ela em Assembly ARMv7, e adaptar o jogo de Tetriz desenvolvido no problema anterior para a nova plataforma.
 
 # Requisitos
-"Falar aqui o que precisa para rodar os testes e a biblioteca"
 
 A biblioteca produzida teve que cumprir os seguintes requisitos:
 
@@ -37,7 +36,7 @@ Em C foram desenvolvidos algumas funções ** Fala aqui sobre C Everton **
 
 # Tetriz
 
-
+** Fala aqui sobre o que precisou enfiar pro jogo funcionar **
 
 # Como executar
 
@@ -137,8 +136,16 @@ Linguagem:
 <img src="https://img.shields.io/badge/Linguagem-C-blue?logo=c&logoColor=white"/>
 
 Sistema Operacional:
-<img src="https://img.shields.io/badge/OS-Linux-yellow?logo=linux&logoColor=white"/>
+<img src="https://img.shields.io/badge/Software-Piskel-blue?logo=piskel&logoColor=white"/>
 
+Ferramentas auxiliares:
+
+
+Ferrak
+
+# Conclusão
+
+Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly e mais algumas funções em C, portanto, os principais objetivos do PBL que eram conseguirmos entender como funciona a GPU de Gabriel Sá Barreto e aprendermos e obtermos experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
 
 
 
