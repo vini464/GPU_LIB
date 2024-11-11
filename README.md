@@ -4,10 +4,10 @@
 
 # Sumário
 
-## Geral
+## Geral:
 Este projeto trata-se do desenvolvimento de uma biblioteca com funções gráficas para a GPU projetada e implementada por Gabriel Sá Barreto no kit de desenvolvimento DE1-SoC. Para realização do projeto, foi necessário aprender como a GPU funciona, como realizar a comunicação entre o HPS e a FPGA, e adaptar o jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) para a nova plataforma.
 
-## Requisitos
+## Requisitos:
 
 A biblioteca produzida teve que cumprir os seguintes requisitos:
 
@@ -20,18 +20,28 @@ A biblioteca produzida teve que cumprir os seguintes requisitos:
 - Todo o código da biblioteca deverá ser escrito na linguagem assembly.
 - Implementar a parte gráfica do jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) utilizando a biblioteca desenvolvida.
 
-## Biblioteca
+## Biblioteca:
 
-O processador consiste num 800MHz Dual-core ARM Cortex-A9 MPCore processor com Assembly ARMv7, e foi desenvolvido nele as seguintes funções em Assembly:
-
-<p align="center">
-  <img src="ReadMe_files/header.png" alt="Descrição do GIF" width="50%">
-</p>
-
+Como produto final, temos uma biblioteca com as seguintes funções:
+```
+void gpu_open();
+void gpu_close();
+void wbr_bg(u_short color);
+void wbr_sp(u_short act, u_short posx, u_short posy, u_short offset, u_short reg);
+void wbm(u_short bgr, u_short address);
+void wsm(u_short spr_address, u_short bgr);
+void save_sprite(u_short pixel_vector[400], u_short offset);
+void dp_triangle(u_short bgr, u_short size, u_short refPosY, u_short refPosX, u_short reg);
+void dp_square(u_short bgr, u_short size, u_short refPosY, u_short refPosX, u_short reg);
+void set_hex(u_short d5_d4, int d3_d2_d1_d0);
+int read_keys();
+```
 
 Vale lembrar que todas as funções após iniciarem a sua execução salvam o contexto dos registradores utilizados para sua execução e restauram esse contexto logo antes do retorno da função para evitar conflitos na execução do problema.
 
-As funções que são instruções da GPU funcionam todas de forma muito semelhante onde os parametros são passados para o buffer Data_B e o opcode e endereço de memoria são enviados para o buffer Data_A, após isso elas aguardam poderem escrever checkando a variavel wrfull == 0 e é enviado um pulso para wrreg permitindo a escrita. Esse processo se repete para as funções wbr_bg, wbr_sp, wbm, wsm, dp_triangle e dp_square
+As funções que são instruções da GPU funcionam todas de forma muito semelhante, onde os dados a serem armazenados e/ou modificados são passados para o buffer `Data_B`, já o opcode junto com o endereço de memória, ou registrador, são enviados para o buffer `Data_A`, após isso é o sinal wrfull é checado até que seja igual a 0, por fim é enviado um pulso para wrreg permitindo a escrita. Esse processo se repete para as funções `wbr_bg`, `wbr_sp`, `wbm`, `wsm`, `dp_triangle` e `dp_square`.
+
+
 
 # C
 

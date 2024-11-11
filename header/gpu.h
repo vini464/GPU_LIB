@@ -23,9 +23,11 @@
 #define ZERO     0b11000000
 
 typedef unsigned short u_short ;
-void gpu_open();
-void gpu_close();
 
+// Mapeia a memória, necessário para executar qualquer uma das funções abaixo
+void gpu_open();
+// Desmapeia a memória
+void gpu_close();
 // Pinta o background com a cor inserida sendo valor máximo 511
 void wbr_bg(u_short color);
 // Desenha um sprite salvo na memória.
