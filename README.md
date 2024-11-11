@@ -38,14 +38,8 @@ int read_keys();
 ```
 
 Todas as funções que são instruções da GPU funcionam de forma muito semelhante, onde os dados a serem armazenados e/ou modificados são passados para o buffer `Data_B`, já o opcode junto com o endereço de memória, ou registrador, são enviados para o buffer `Data_A`, após isso é o sinal wrfull é checado até que seja igual a 0, por fim é enviado um pulso para wrreg permitindo a escrita. Esse processo se repete para as funções `wbr_bg`, `wbr_sp`, `wbm`, `wsm`, `dp_triangle` e `dp_square`. 
-
+- Exemplo de como uma instrução é enviada para a GPU:
 ![Envio de uma instrução para a GPU](ReadMe_files/dp.png)
-
-<p align="center">
-  <img src="ReadMe_files/dp.png" alt="Envio de uma instrução da GPU" width="50%">
-   <p>Envio de uma isntrução para a GPU</p> 
-</p>
-
 
 # C
 
