@@ -2,26 +2,25 @@
   <img src="ReadMe_files/inicio.gif" alt="Descrição do GIF" width="50%">
 </p>
 
-# Sumario
+# Sumário
 
-# Geral
-Nesse projeto foi desenvolvido uma biblioteca em assembly ARMv7 para a utilização da GPU desenvolvida por Gabriel Sá Barreto, para o seu desenvolvimento foi necessario aparender sobre como a GPU funciona, como se comunicar com ela e utilizar ela em Assembly ARMv7, e adaptar o jogo de Tetriz desenvolvido no problema anterior para a nova plataforma.
+## Geral
+Este projeto trata-se do desenvolvimento de uma biblioteca com funções gráficas para a GPU projetada e implementada por Gabriel Sá Barreto no kit de desenvolvimento DE1-SoC. Para realização do projeto, foi necessário aprender como a GPU funciona, como realizar a comunicação entre o HPS e a FPGA, e adaptar o jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) para a nova plataforma.
 
-# Requisitos
+## Requisitos
 
 A biblioteca produzida teve que cumprir os seguintes requisitos:
 
-- [x] Desenhar sprites 20x20 na tela
-- [x] Definir a cor base do background
-- [x] Modificar os sprites armazenados na memoria
-- [x] Desenhar quadrados e triangulos 20x20 até 160x160 aumentando numa escala de 10x10
-- [x] Pintar quadrados 8x8 na tela
-- [x] Limpar a tela
-- [x] Printar telas inteiras
+- Conter todas as funções do processador gráfico, são elas:
+    - Desenhar sprites na tela;
+    - Modificar/Inserir sprites na memória da GPU;
+    - Mudar a cor base do background;
+    - Desenhar quadrados de tamanho fixo (8x8 pixels) na tela;
+    - Desenhar polígonos (quadrados ou triângulos) de tamanhos variáveis na tela.
+- Todo o código da biblioteca deverá ser escrito na linguagem assembly.
+- Implementar a parte gráfica do jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) utilizando a biblioteca desenvolvida.
 
-Além dos seguintes requisitos, foi solicitado que as instruções fossem feitas em Assembly e extendem-se para C.
-
-# Assembly
+## Biblioteca
 
 O processador consiste num 800MHz Dual-core ARM Cortex-A9 MPCore processor com Assembly ARMv7, e foi desenvolvido nele as seguintes funções em Assembly:
 
@@ -98,9 +97,6 @@ Esse teste consiste em desenhar um triangulo e um quadrado na tela, caso passe p
 
 <p align="center">
   <img src="ReadMe_files/dp_triangle.gif" alt="Descrição do GIF" width="25%">
-</p>
-
-<p align="center">
   <img src="ReadMe_files/dp_square.gif" alt="Descrição do GIF" width="25%">
 </p>
 

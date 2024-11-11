@@ -45,6 +45,4 @@ void set_hex(u_short d5_d4, int d3_d2_d1_d0);
 // Lê qual botão foi pressionado
 int read_keys();
 
-// utility functions
-
 #endif // !GPU_H
