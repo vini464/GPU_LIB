@@ -37,10 +37,12 @@ void set_hex(u_short d5_d4, int d3_d2_d1_d0);
 int read_keys();
 ```
 
-Vale lembrar que todas as funções após iniciarem a sua execução salvam o contexto dos registradores utilizados para sua execução e restauram esse contexto logo antes do retorno da função para evitar conflitos na execução do problema.
+Todas as funções que são instruções da GPU funcionam de forma muito semelhante, onde os dados a serem armazenados e/ou modificados são passados para o buffer `Data_B`, já o opcode junto com o endereço de memória, ou registrador, são enviados para o buffer `Data_A`, após isso é o sinal wrfull é checado até que seja igual a 0, por fim é enviado um pulso para wrreg permitindo a escrita. Esse processo se repete para as funções `wbr_bg`, `wbr_sp`, `wbm`, `wsm`, `dp_triangle` e `dp_square`. 
 
-As funções que são instruções da GPU funcionam todas de forma muito semelhante, onde os dados a serem armazenados e/ou modificados são passados para o buffer `Data_B`, já o opcode junto com o endereço de memória, ou registrador, são enviados para o buffer `Data_A`, após isso é o sinal wrfull é checado até que seja igual a 0, por fim é enviado um pulso para wrreg permitindo a escrita. Esse processo se repete para as funções `wbr_bg`, `wbr_sp`, `wbm`, `wsm`, `dp_triangle` e `dp_square`.
-
+<p align="center">
+  <img src="ReadMe_files/dp.png" alt="Envio de uma instrução da GPU" width="50%">
+   <p>Envio de uma isntrução para a GPU</p> 
+</p>
 
 
 # C
