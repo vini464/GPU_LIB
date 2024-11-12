@@ -5,6 +5,12 @@
 # Sumário
 
 - [Geral](#geral)
+- [Requisitos](#requisitos)
+- [Biblioteca](#biblioteca)
+- [Tetriz](#Tetriz)
+- [Como executar](#Como executar)
+- [Testes](#Testes)
+
 
 ## Geral:
 Este projeto trata-se do desenvolvimento de uma biblioteca com funções gráficas para a GPU projetada e implementada por Gabriel Sá Barreto no kit de desenvolvimento DE1-SoC. Para realização do projeto, foi necessário aprender como a GPU funciona, como realizar a comunicação entre o HPS e a FPGA, e adaptar o jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) para a nova plataforma.
