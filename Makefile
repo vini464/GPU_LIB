@@ -9,9 +9,9 @@ images:
 	gcc -c ./assets/raw/*.c
 	mv *.o ./assets/obj/
 
-run: images build 
-	gcc ./src/jarvis.c -o run ./obj/gpu.o ./assets/obj/snake.o
-	sudo ./run
+jarvis: images build 
+	gcc ./src/jarvis.c -o jarvis ./obj/gpu.o ./assets/obj/snake.o
+	sudo ./jarvis
 
 run_game: images source_game build
 	gcc ./src/main.c -o tetriz ./obj/*.o ./assets/obj/screens.o -lpthread

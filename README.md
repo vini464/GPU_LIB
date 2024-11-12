@@ -41,13 +41,18 @@ Todas as funções que são instruções da GPU funcionam de forma muito semelha
 - Exemplo de como uma instrução é enviada para a GPU:
 ![Envio de uma instrução para a GPU](ReadMe_files/dp.png)
 
-# C
+As funções `gpu_open` e `gpu_close` são utilizadas para mapear e desampear a memória, respectivamente. Elas são necessárias para que possamos escrever nos buffers `Data_A` e `Data_B`, nos endereços dos displays de 7 segmentos, e ler do endereço dos botões.
 
-Em C foram desenvolvidos algumas funções ** Fala aqui sobre C Everton **
+A função `save_sprite` foi implementada para facilitar a inserção de novos sprites na memória. O fluxograma a seguir descreve seu comportamento:
 
-# Tetriz
+![Fluxograma da função save_sprite](ReadMe_files/save_sprite.png)
 
-** Fala aqui sobre o que precisou enfiar pro jogo funcionar **
+Por fim temos as funções `read_keys` e `set_hex`, a primeira é usada para identificar quais dos botões estão pressionados (retornando um numero de 4 bits onde 0 -> pressionado e 1 -> não pressioado). Já a segunda função manda um número de 8 bits para cada display de 7 segmentos, onde 1 indica que é para apagar e 0 acender cada segmento. 
+
+
+### Tetriz
+
+Para o jogo funcionar neste novo hardware, algumas alterações foram realizadas. Em resumo: onde chamávamos as funções da biblioteca `intelfpgaup` nós agora chamamos as funções que desenvolvemos.
 
 # Como executar
 
@@ -60,16 +65,21 @@ Para rodarmos o código, precisamos cumprir alguns requisitos que são:
 5. Um cabo de Ethernet
 6. Um computador com terminal para acessar a placa via protocolo SSH.
 
-Com todos os requisitos cumpridos basta transferir os arquivos desse repositório para a placa. E então entrar na pasta do projeto e rodar o comando `make game`.
+Com todos os requisitos cumpridos basta transferir os arquivos desse repositório para a placa. E então entrar na pasta do projeto e rodar o comando `make run_game`. Se você quiser apenas testar o jogo deve rodar o comando `make jarvis`.
 
 Caso sua placa tenha acesso a internet, e o git instalado, você pode digitar o seguinte comando: 
 Clone o repositório:
 ```
 git clone https://github.com/vini464/GPU_LIB.git && cd GPU_LIB
-make game
+make run_game 
 ```
-> **Obs: Você precisa de privilégio de administrador para rodar o jogo.**
+ou
+```
+git clone https://github.com/vini464/GPU_LIB.git && cd GPU_LIB
+make jarvis 
+```
 
+> **Obs: Você precisa de privilégio de administrador para rodar o jogo.**
 
 # Testes
 
@@ -149,7 +159,7 @@ Ferramentas auxiliares:
 
 # Conclusão
 
-Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly e mais algumas funções em C, portanto, os principais objetivos do PBL que eram, conseguir entender como funciona a GPU de Gabriel Sá Barreto e aprender e obter experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
+Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly, portanto, os principais objetivos do PBL que eram, conseguir entender como funciona a GPU de Gabriel Sá Barreto e obter experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
 
 
 
