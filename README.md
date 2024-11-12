@@ -10,6 +10,7 @@
 - [Tetriz](#Tetriz)
 - [Como executar](#Como-executar)
 - [Testes](#Testes)
+- [Desenvolvedores](#Desenvolvedores)
 
 
 ## Geral:
@@ -181,4 +182,6 @@ Ferramentas auxiliares:
 Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Assembly, portanto, os principais objetivos do PBL que eram, conseguir entender como funciona a GPU de Gabriel Sá Barreto e obter experiencia com códigos em Assembly ARM foi conquistado tendo em vista o sucesso do desenvolvimento do problema.
 
 
-
+# Desenvolvedores:
+    - [Everton Vinícius](github.com/vini464)
+    - [Pedro Henrique](github.com/Phasilva-dev)
