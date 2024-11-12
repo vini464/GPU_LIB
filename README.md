@@ -4,6 +4,8 @@
 
 # Sumário
 
+- [Geral](#geral)
+
 ## Geral:
 Este projeto trata-se do desenvolvimento de uma biblioteca com funções gráficas para a GPU projetada e implementada por Gabriel Sá Barreto no kit de desenvolvimento DE1-SoC. Para realização do projeto, foi necessário aprender como a GPU funciona, como realizar a comunicação entre o HPS e a FPGA, e adaptar o jogo [Tetriz](https://github.com/vini464/TETRIS_ON_DE1-SOC) para a nova plataforma.
 
@@ -24,16 +26,27 @@ A biblioteca produzida teve que cumprir os seguintes requisitos:
 
 Como produto final, temos uma biblioteca com as seguintes funções:
 ```
+// Mapeia a memória, necessário para executar qualquer uma das funções abaixo
 void gpu_open();
+// Desmapeia a memória
 void gpu_close();
+// Pinta o background com a cor inserida sendo valor máximo 511
 void wbr_bg(u_short color);
+// Desenha um sprite salvo na memória.
 void wbr_sp(u_short act, u_short posx, u_short posy, u_short offset, u_short reg);
+// Escreve um bloco no background da cor escolhida
 void wbm(u_short bgr, u_short address);
+// Salva um pixel de um sprite na memória
 void wsm(u_short spr_address, u_short bgr);
+// salva um sprite inteiro na memória
 void save_sprite(u_short pixel_vector[400], u_short offset);
+// desenha um triangulo na tela
 void dp_triangle(u_short bgr, u_short size, u_short refPosY, u_short refPosX, u_short reg);
+// desenha um quadrado na tela
 void dp_square(u_short bgr, u_short size, u_short refPosY, u_short refPosX, u_short reg);
+// Mostra um número no display de 7 segmentos
 void set_hex(u_short d5_d4, int d3_d2_d1_d0);
+// Lê qual botão foi pressionado
 int read_keys();
 ```
 
