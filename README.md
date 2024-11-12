@@ -183,5 +183,5 @@ Foi desenvolvido toda a biblioteca para uso da GPU com todos os comandos em Asse
 
 
 # Desenvolvedores:
-    - [Everton Vinícius](github.com/vini464)
-    - [Pedro Henrique](github.com/Phasilva-dev)
+    - [Everton Vinícius](https://github.com/vini464)
+    - [Pedro Henrique](https://github.com/Phasilva-dev)
