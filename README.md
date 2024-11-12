@@ -8,7 +8,7 @@
 - [Requisitos](#requisitos)
 - [Biblioteca](#biblioteca)
 - [Tetriz](#Tetriz)
-- [Como executar](#Como executar)
+- [Como executar](#Como-executar)
 - [Testes](#Testes)
 
 
